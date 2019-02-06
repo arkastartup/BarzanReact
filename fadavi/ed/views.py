@@ -91,6 +91,6 @@ def activate(id):
     if id not in active_users:
         active_users.append(id)
     else:
-        check['status'] = 'این کاربر از قبل وارد سیستم شده است'
+        check['status'] = 'این کاربر از قبل وارد سیستم  شده است'
 def signupp(data):
     return render(data,'signup.htm')       
