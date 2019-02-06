@@ -85,7 +85,7 @@ def changepass(data):
         check['status']='success'
 
     else:
-        check['status']=' رمز قثثقثقث عبور قبلی صحیح نمیباشد'
+        check['status']=' رمز عبور قبلی صحیح نمیباشد'
 
 def activate(id):
     if id not in active_users:
