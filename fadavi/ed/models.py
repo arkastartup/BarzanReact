@@ -2,48 +2,52 @@ from django.db import models
 import datetime
 
 class judge(models.Model):
-    judge_id = models.IntegerField(max_length = 20,primary_key=True)
-    full_name = models.CharField(max_length = 150)
+    judge_id = models.IntegerField(max_length = 15, primary_key=True)
+    full_name = models.CharField.max_length
     user_name = models.CharField(max_length = 50)
-    degree = models.CharField(max_length = 100)
+    skill = models.CharField(max_length = 100)
     email = models.CharField(max_length = 150)
     face_book = models.CharField(max_length = 150)
     twitter = models.CharField(max_length = 150)
     link_edin = models.CharField(max_length = 150)
     description = models.CharField(max_length = 500)
     create_date = models.DateField(default = datetime.date.today())
-
-#
+    username_adder = models.Datefield(max_lenght = 50)
 
 class users(models.Model):
-    user_id = models.IntegerField(max_length = 20, primary_key=True)
-    role = models.IntegerField(max_length = 15)
+    user_id = models.IntegerField(max_length = 20, primary_key = True)
+    role = models.IntegerField(max_length = 15)         ## Admin // judge // nomral user // paper user
     user_name = models.IntegerField(max_length = 50)
-    name = models.IntegerField(max_length = 50)
+    name = models.IntegerField(max_length = 100)
     family = models.IntegerField(max_length = 80)
-    country_id = models.IntegerField(max_length = 1)
-    city_id = models.IntegerField(max_length = 1)
-    teacher_id = models.IntegerField(max_length = 1)
-    address = models.CharField(max_length = 500)
-    status = models.IntegerField(max_length = 1)   #online=1 // offline=0
+    country_id = models.ForeignKey('Country')
+    city_id = models.ForeignKey('City')
+    province_id = models.ForeignKey('province')
+    # grade_id =  models.ForeignKey('Grade')
+    address = models.CharField.max_length
+    # status = models.IntegerField(max_length = 1)   #online=1 // offline=0
     phone = models.IntegerField(max_length = 20)
-    Telegram = models.CharField(max_length = 50)
-    grade_id = models.IntegerField(max_length = 20)
-    study_branch = models.CharField(max_length = 60)
+    Telegram = models.CharField(max_length = 50)   # linke is added at the commence of id
+    study_branch = models.CharField.max_length
     create_date = models.DateField(default = datetime.date.today())
 
-class country(models.Model):
+class Country(models.Model):
     id = models.IntegerField(max_length = 10, primary_key=True)
     name = models.CharField(max_length = 70)
-    country_id = models.IntegerField(max_length = 10)
     username_adder = models.CharField(max_length = 50)
     create_date = models.DateField(default = datetime.date.today())
 
+class Province(models.Model):
+    id = models.IntegerField(max_length = 10 , primary_key = True)
+    name = models.CharField(max_length = 10)
+    country_id = models.ForeignKey('Country')
+    username_adder = models.CharField(max_length = 50) 
+    create_date = models.DateField(default = datetime.date.today())
 
-class city(models.Model):
+class City(models.Model):
     id = models.IntegerField(max_length = 20, primary_key=True)
     name = models.CharField(max_length = 70)
-    province_id = models.IntegerField(max_length = 20)
+    province_id = models.ForeignKey('Province')
     username_adder = models.CharField(max_length = 50)
     create_date = models.DateField(default = datetime.date.today())
 
@@ -53,7 +57,6 @@ class sponser(models.Model):
     username_adder = models.CharField(max_length = 50)
     description = models.CharField(max_length = 70)
     create_date = models.DateField(default = datetime.date.today())
-
 
 class site_views(models.Model):
     id = models.IntegerField(max_length = 20, primary_key=True)
@@ -66,9 +69,9 @@ class contact_us(models.Model):
     last_name = models.CharField(max_length = 120)
     email = models.CharField(max_length = 70)
     phone = models.IntegerField(max_length = 20)
-    description = models.CharField(max_length = 500)
+    description = models.CharField.max_length 
     subject = models.CharField(max_length = 150)
-    message_state = models.IntegerField(max_length = 1)
+    # message_state = models.IntegerField(max_length = 1)
 
 
 class paper_ticket(models.Model):
@@ -81,9 +84,9 @@ class paper_ticket(models.Model):
     username_adder = models.CharField(max_length = 50)
     response_username = models.CharField(max_length = 50)
     response_message = models.CharField(max_length = 500)
-    message_read = models.IntegerField(max_length = 1)
+    # message_read = models.IntegerField(max_length = 1)
     response_date = models.DateField(default = datetime.date.today())         ## doubt on this one
-    response_status = models.IntegerField(max_length = 1)
+    # response_status = models.IntegerField(max_length = 1)
 
 
 class conferance_aspects(models.Model):
@@ -93,18 +96,18 @@ class conferance_aspects(models.Model):
     create_date = models.DateField(default = datetime.date.today())
 
 
-class news(models.Model):
+class News(models.Model):
     id = models.IntegerField(max_length = 20, primary_key=True)
     title = models.CharField(max_length = 80)
     picture_name = models.CharField(max_length = 150)
-    blog_group = models.IntegerField(max_length = 20)
+    blog_group = models.ForeignKey('Blog_group')
     short_description = models.CharField(max_length = 250)
-    description = models.CharField(max_length = 500)
+    description = models.CharField.max_Length
     username_adder = models.CharField(max_length = 50)
     create_date = models.DateField(default = datetime.date.today())
 
 
-class blog_group(models.Model):
+class Blog_group(models.Model):
     id = models.IntegerField(max_length = 20, primary_key=True)
     name = models.CharField(max_length = 50)
     status = models.IntegerField(max_length = 1)
@@ -120,7 +123,7 @@ class scheduel(models.Model):
     start_time = models.CharField(max_length = 20)
     end_time = models.CharField(max_length = 20)
     date = models.DateField(default = datetime.date.today())
-    speaker_id = models.IntegerField(max_length = 20)
+    speaker = models.IntegerField(max_length = 50)
     tag = models.CharField(max_length = 500)
     username_adder = models.CharField(max_length = 50)
     create_date = models.DateField(default = datetime.date.today())
@@ -151,7 +154,8 @@ class user_comment(models.Model):
     email = models.CharField(max_length = 100)
     description = models.CharField(max_length = 500)
     avatar = models.CharField(max_length = 500)
-    blong_id = models.IntegerField(max_length = 20)
+    blog_id = models.ForeignKey('News')
+    # status = models.
 
 
 class response_comment(models.Model):
@@ -161,7 +165,7 @@ class response_comment(models.Model):
     phone = models.IntegerField(max_length = 20)
     email = models.CharField(max_length = 100)
     description = models.CharField(max_length = 500)
-    avatar = models.CharField(max_length = 500)
+    # avatar = models.CharField(max_length = 500)
     comment_id = models.IntegerField(max_length = 20)
 
 
