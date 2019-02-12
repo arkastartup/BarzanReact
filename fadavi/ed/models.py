@@ -13,7 +13,7 @@ class judge(models.Model):
     description = models.CharField(max_length = 500)
     create_date = models.DateField(default = datetime.date.today())
 
-
+#
 
 class users(models.Model):
     user_id = models.IntegerField(max_length = 20, primary_key=True)
